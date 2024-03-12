@@ -47,5 +47,5 @@ char **my_getpwd(char **env);
 char *skipstr(char *word, char delimiter);
 int error_diectory(char *path);
 int error_command(int num_input);
-char **pipe_loop(char **my_tab, char **env, char *input);
+char **my_comma(char **my_tab, char **env, char *input);
 #endif
