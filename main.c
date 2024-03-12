@@ -52,7 +52,6 @@ static char **add_tab(char *input, char **my_tab)
         e->input = my_strdup(input);
         my_new_tab = my_str_to_word_array(input);
         verif_exit();
-        modify_struct(my_new_tab);
         return my_new_tab;
     }
     return NULL;
@@ -66,11 +65,13 @@ int my_loop(char **my_tab, char *input, char **env, int argc)
         input = my_get_input();
         if (input != NULL) {
             input = skip_spaces(input);
-            my_tab = add_tab(input, my_tab);
-            env = pipe_loop(my_tab, env, input);
         }
         if (!isatty(STDIN_FILENO) && input == NULL)
             break;
+        if (input != NULL) {
+            my_tab = add_tab(input, my_tab);
+            env = my_comma(my_tab, env, input);
+        }
         wait(&status);
         print_arg(my_tab, 1);
     }
