@@ -39,7 +39,7 @@ int error_command(int num_input)
         exit_status = WEXITSTATUS(status);
         if (exit_status == 14 && my_strcmp(e->my_tab[0], "cd") != 0) {
             write(2, e->input, my_strlen(e->input));
-            write(2, ": Command not found.\n", 20);
+            write(2, ": Command not found.\n", 22);
         }
     }
     free(input);
