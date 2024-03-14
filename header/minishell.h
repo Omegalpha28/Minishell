@@ -17,6 +17,7 @@
     #include <sys/wait.h>
     #include <errno.h>
     #include <signal.h>
+    #include <fcntl.h>
 
 char my_putchar(char a);
 char *skip_spaces(char *word);

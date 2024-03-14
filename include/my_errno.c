@@ -10,11 +10,17 @@ int error_diectory(char *path)
 {
     DIR *is_exist = opendir(path);
 
-    if (is_exist)
+    if (is_exist || my_strncmp(e->my_tab[0], "setenv", 6) == 0||
+        my_strncmp(e->my_tab[0], "unsetenv", 8) == 0)
         return 0;
     else {
-        write(2, e->my_tab[0], my_strlen(e->my_tab[0]));
-        write(2, ": No such file or directory.\n", 30);
+        if (open(path, O_RDONLY) == -1) {
+            write(2, path, my_strlen(path));
+            write(2, ": No such file or directory.\n", 30);
+        } else {
+            write(2, path, my_strlen(path));
+            write(2, ": Not a directory.\n", 20);
+        }
         return -1;
     }
 }
@@ -26,6 +32,9 @@ int error_command(int num_input)
 
     my_strcat(input, "bash: ");
     my_strcat(input, e->input);
+    if (my_strncmp(e->my_tab[0], "setenv", 6) == 0 ||
+        my_strncmp(e->my_tab[0], "unsetenv", 8) == 0)
+        return 0;
     if (WIFEXITED(status)) {
         exit_status = WEXITSTATUS(status);
         if (exit_status == 14 && my_strcmp(e->my_tab[0], "cd") != 0) {
