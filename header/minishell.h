@@ -37,7 +37,7 @@ char *get_env(char **env, char *filename);
 char *my_strdup(char const *src);
 int verif_exit(void);
 int modify_struct(char **my_tab);
-env_t *init_struct(char **tab, char **env);
+env_t *init_struct(char **tab, char **env, int who, char *input);
 char **my_cd(int i, char *input, char **env);
 char **my_command(char *input, char **env);
 char **my_setenv(char **env, char *input);

@@ -7,7 +7,7 @@
 #include "../header/struct.h"
 #include "../header/minishell.h"
 
-env_t *init_struct(char **tab, char **env)
+env_t *init_struct(char **tab, char **env, int who, char *input)
 {
     args_t *args = malloc(sizeof(args_t));
     int i = 0;
@@ -25,7 +25,7 @@ env_t *init_struct(char **tab, char **env)
     e->args = args;
     e->my_tab = tab;
     e->ending = 0;
-    e->input = tab[0];
+    e->input = my_strdup(input);
     e->oldpwd = my_path_zone(env, "OLDPWD");
     return e;
 }

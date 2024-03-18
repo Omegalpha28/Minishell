@@ -10,7 +10,7 @@ int error_diectory(char *path)
 {
     DIR *is_exist = opendir(path);
 
-    if (is_exist || my_strncmp(e->my_tab[0], "setenv", 6) == 0||
+    if (is_exist || my_strncmp(e->my_tab[0], "setenv", 6) == 0 ||
         my_strncmp(e->my_tab[0], "unsetenv", 8) == 0)
         return 0;
     else {

@@ -46,8 +46,10 @@ static char **comma_loop(char *input, char **env, int have_semicolon)
         while (partieRestante != NULL) {
             resultat = malloc(sizeof(char *) * my_strlen(partieRestante));
             resultat = partieRestante;
+            if (resultat != NULL)
+                resultat = skip_spaces(resultat);
             modify_struct(my_str_to_word_array(resultat));
-            partieRestante = strtok(NULL, ";");
+            partieRestante = strtok(NULL, ";\0");
             env = inspect_input(resultat, env);
         }
     }
