@@ -55,6 +55,7 @@ static char **verif_echo(char *input, char **env)
         init_struct(tab, env, 1, my_strdup(input));
     } else {
         tab = my_str_to_word_array("hello world");
+        init_struct(tab, env, 0, "hello world");
         print_arg(tab, 1);
     }
     return tab;
