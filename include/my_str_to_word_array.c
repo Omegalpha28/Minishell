@@ -37,6 +37,13 @@ char *skip_spaces(char *word)
     return word;
 }
 
+static int coding_style(char *word, int j)
+{
+    if (word[j] == ' ')
+        for (; word[j + 1] == ' '; j++);
+    return j;
+}
+
 char **my_str_to_word_array(char *word)
 {
     char **array;
@@ -52,7 +59,7 @@ char **my_str_to_word_array(char *word)
             array[line][character] = word[j];
             character++;
         }
-        for (; word[j + 1] == ' '; j++);
+        j = coding_style(word, j);
         if (array[line][character - 1] != '\0')
             array[line][character] = '\0';
         line++;

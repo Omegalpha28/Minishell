@@ -23,22 +23,6 @@ static int free_all(char **my_tab, char *input, char **env)
     return 0;
 }
 
-char *my_get_input(void)
-{
-    char *input = NULL;
-    size_t input_size = 0;
-    ssize_t characters_read = -1;
-
-    if (isatty(STDIN_FILENO))
-        characters_read = getline(&input, &input_size, stdin);
-    if (characters_read > -1) {
-        if (input[characters_read - 1] == '\n')
-            input[characters_read - 1] = '\0';
-        return input;
-    } else
-        return NULL;
-}
-
 static char **add_tab(char *input, char **my_tab)
 {
     char **my_new_tab;
@@ -55,6 +39,41 @@ static char **add_tab(char *input, char **my_tab)
         return my_new_tab;
     }
     return NULL;
+}
+
+static char **verif_echo(char *input, char **env)
+{
+    ssize_t characters_read = -1;
+    char **tab;
+    size_t stat;
+
+    if (!isatty(STDIN_FILENO)) {
+        characters_read = getline(&input, &stat, stdin);
+        if (characters_read == 1)
+            exit(0);
+        tab = my_str_to_word_array(input);
+        init_struct(tab, env, 1, my_strdup(input));
+    } else {
+        tab = my_str_to_word_array("hello world");
+        print_arg(tab, 1);
+    }
+    return tab;
+}
+
+char *my_get_input(void)
+{
+    char *input = NULL;
+    size_t input_size = 0;
+    ssize_t characters_read = -1;
+
+    if (isatty(STDIN_FILENO))
+        characters_read = getline(&input, &input_size, stdin);
+    if (characters_read > -1) {
+        if (input[characters_read - 1] == '\n')
+            input[characters_read - 1] = '\0';
+        return input;
+    } else
+        return NULL;
 }
 
 int my_loop(char **my_tab, char *input, char **env, int argc)
@@ -76,25 +95,6 @@ int my_loop(char **my_tab, char *input, char **env, int argc)
         print_arg(my_tab, 1);
     }
     return 0;
-}
-
-static char **verif_echo(char *input, char **env)
-{
-    ssize_t characters_read = -1;
-    char **tab;
-    size_t stat;
-
-    if (!isatty(STDIN_FILENO)) {
-        characters_read = getline(&input, &stat, stdin);
-        if (characters_read == 1)
-            exit(0);
-        tab = my_str_to_word_array(input);
-        init_struct(tab, env, 1, my_strdup(input));
-    } else {
-        tab = my_str_to_word_array("hello world");
-        print_arg(tab, 1);
-    }
-    return tab;
 }
 
 int main(int argc, char *argv[], char **env)

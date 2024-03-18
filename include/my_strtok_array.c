@@ -26,6 +26,13 @@ static int word_counter_strtok(char *word, char del)
     return line;
 }
 
+static int coding_style(char *word, int j)
+{
+    if (word[j] == ' ')
+        for (; word[j + 1] == ' '; j++);
+    return j;
+}
+
 char **my_strtok_array(char *word, char del)
 {
     char **array;
@@ -37,11 +44,12 @@ char **my_strtok_array(char *word, char del)
     for (int j = 0; j < my_strlen(word); j++) {
         character = 0;
         array[line] = malloc(my_strlen(word) + 1);
-        for (; my_char_isprintable(word[j]) == 0 && word[j] != del; j++) {
+        for (; word[j] == ' ' || my_char_isprintable(word[j]) == 0 &&
+            word[j] != del; j++) {
             array[line][character] = word[j];
             character++;
         }
-        for (; word[j + 1] == ' '; j++);
+        j = coding_style(word, j);
         if (array[line][character - 1] != '\0')
             array[line][character] = '\0';
         line++;

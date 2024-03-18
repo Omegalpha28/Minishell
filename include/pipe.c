@@ -33,24 +33,31 @@ static int verif_semicolon(char *input)
     return 1;
 }
 
+static char *coding_style(char *resultat)
+{
+    if (resultat[0] == ';')
+        resultat++;
+    if (resultat != NULL)
+        resultat = skip_spaces(resultat);
+    return resultat;
+}
+
 static char **comma_loop(char *input, char **env, int have_semicolon)
 {
     char *input_copy = my_strdup(input);
     char *partieRestante;
     char *resultat;
+    char **tab = my_strtok_array(input_copy, ';');
+    int i = 0;
 
-    if (input_copy[0] == ';')
-        input_copy++;
     if (have_semicolon == 0) {
-        partieRestante = strtok(input_copy, ";");
-        while (partieRestante != NULL) {
-            resultat = malloc(sizeof(char *) * my_strlen(partieRestante));
-            resultat = partieRestante;
-            if (resultat != NULL)
-                resultat = skip_spaces(resultat);
+        while (tab[i] != NULL) {
+            resultat = malloc(sizeof(char) * my_strlen(tab[i]));
+            resultat = tab[i];
+            resultat = coding_style(resultat);
             modify_struct(my_str_to_word_array(resultat));
-            partieRestante = strtok(NULL, ";\0");
             env = inspect_input(resultat, env);
+            i++;
         }
     }
     return env;
