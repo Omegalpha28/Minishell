@@ -15,6 +15,15 @@ static int my_home(char **env)
     return 0;
 }
 
+static char **slash(char *input, char **env)
+{
+    if (my_strncmp(input, "/", 1) == 0) {
+        chdir("/");
+        return (my_getpwd(env));
+    }
+    return env;
+}
+
 static char *create_new_line(char *env, char *my_pwd)
 {
     char *new_env;
@@ -60,7 +69,7 @@ char **my_cd(int i, char *input, char **env)
     }
     for (; *input != ' '; input++);
     for (; *input == ' '; input++);
-    if (my_strcmp(input, "~") == 0 || my_strcmp(input, "--") == 0) {
+    if (my_strncmp(input, "~", 1) == 0 || my_strncmp(input, "--", 2) == 0) {
         my_home(env);
         return (my_getpwd(env));
     }
@@ -68,6 +77,7 @@ char **my_cd(int i, char *input, char **env)
         chdir(my_oldpwd);
         return (my_getpwd(env));
     }
+    env = slash(input, env);
     if (error_diectory(input) == 0)
         chdir(input);
     return env;

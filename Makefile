@@ -22,7 +22,8 @@ SRC =  include/print.c \
 	include/play_command.c \
 	include/my_skipstr.c \
 	include/my_errno.c \
-	include/pipe.c
+	include/pipe.c \
+	include/my_str_pipe_array.c
 
 
 FILE_O = *.o

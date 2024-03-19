@@ -49,4 +49,5 @@ char *skipstr(char *word, char delimiter);
 int error_diectory(char *path);
 int error_command(int num_input);
 char **my_comma(char **my_tab, char **env, char *input);
+char **my_str_pipe_array(char *word, char del);
 #endif

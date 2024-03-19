@@ -6,10 +6,27 @@
 */
 #include "../header/minishell.h"
 
+static char *skip_spaces_after(char *input)
+{
+    char *result = malloc(sizeof(char) * my_strlen(input));
+    int i = 0;
+
+    for (; input[i] != '\0' && input[i] == ' '; i++)
+        result[i] = input[i];
+    if (result[i] != '\0')
+        result[i] = '\0';
+    return result;
+}
+
 int error_diectory(char *path)
 {
     DIR *is_exist = opendir(path);
+    char result;
 
+    if (my_strncmp(e->my_tab[0], "cd", 2) == 0) {
+        path = skip_spaces_after(path);
+        return 0;
+    }
     if (is_exist || my_strncmp(e->my_tab[0], "setenv", 6) == 0 ||
         my_strncmp(e->my_tab[0], "unsetenv", 8) == 0)
         return 0;

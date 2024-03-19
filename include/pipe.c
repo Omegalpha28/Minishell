@@ -29,13 +29,15 @@ static int verif_semicolon(char *input)
     for (int i = 0; input[i]; i++) {
         if (input[i] == ';')
             return 0;
+        if (input[i] == '\\' && input[i + 1] == 'n')
+            return 0;
     }
     return 1;
 }
 
 static char *coding_style(char *resultat)
 {
-    if (resultat[0] == ';')
+    if (resultat[0] == ';' || resultat[0] == '\\' && resultat[1] == 'n')
         resultat++;
     if (resultat != NULL)
         resultat = skip_spaces(resultat);
@@ -47,7 +49,7 @@ static char **comma_loop(char *input, char **env, int have_semicolon)
     char *input_copy = my_strdup(input);
     char *partieRestante;
     char *resultat;
-    char **tab = my_strtok_array(input_copy, ';');
+    char **tab = my_str_pipe_array(input_copy, ';');
     int i = 0;
 
     if (have_semicolon == 0) {

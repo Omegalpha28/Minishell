@@ -107,6 +107,7 @@ int main(int argc, char *argv[], char **env)
         for (int i = 1; i < 2; i++)
             my_tab = my_str_to_word_array(argv[i]);
         init_struct(my_tab, env, 0, my_strdup(my_tab[0]));
+        print_arg(my_tab, 1);
     } else if (argc == 1) {
         my_tab = verif_echo(input, env);
         input = my_strdup(e->input);
