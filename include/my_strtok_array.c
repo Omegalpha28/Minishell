@@ -33,6 +33,14 @@ static int coding_style(char *word, int j)
     return j;
 }
 
+static int compare(int j, char *word, char del)
+{
+    if (word[j] == ' ' || my_char_isprintable(word[j]) == 0 &&
+        word[j] != del)
+        return 0;
+    return 1;
+}
+
 char **my_strtok_array(char *word, char del)
 {
     char **array;
@@ -44,8 +52,7 @@ char **my_strtok_array(char *word, char del)
     for (int j = 0; j < my_strlen(word); j++) {
         character = 0;
         array[line] = malloc(my_strlen(word) + 1);
-        for (; word[j] == ' ' || my_char_isprintable(word[j]) == 0 &&
-            word[j] != del; j++) {
+        for (; compare(j, word, del) == 0; j++) {
             array[line][character] = word[j];
             character++;
         }
