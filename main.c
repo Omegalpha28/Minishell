@@ -10,6 +10,7 @@
 env_t *e;
 int status;
 char *my_command_echo;
+int exit_status;
 
 static int free_all(char **my_tab, char *input, char **env)
 {
@@ -79,7 +80,7 @@ char *my_get_input(void)
 
 int my_loop(char **my_tab, char *input, char **env, int argc)
 {
-    int status = 100000;
+    int time = 100000;
 
     while (e->ending != -1) {
         if (isatty(STDIN_FILENO))
@@ -92,7 +93,7 @@ int my_loop(char **my_tab, char *input, char **env, int argc)
         }
         if (!isatty(STDIN_FILENO) || !isatty(STDIN_FILENO) && input == NULL)
             break;
-        wait(&status);
+        wait(&time);
         print_arg(my_tab, 1);
     }
     return 0;
@@ -113,5 +114,5 @@ int main(int argc, char *argv[], char **env)
         input = my_strdup(e->input);
     }
     my_loop(my_tab, input, env, argc);
-    return (status);
+    return (exit_status);
 }

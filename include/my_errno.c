@@ -53,20 +53,21 @@ int error_diectory(char *path)
 
 int error_command(int num_input)
 {
-    char *input = malloc(sizeof(char) * my_strlen(e->input) + 40);
-    int exit_status;
+    char *input = malloc(sizeof(char) * my_strlen(e->input) + 100);
 
-    my_strcat(input, "bash: ");
-    my_strcat(input, e->input);
     if (my_strncmp(e->my_tab[0], "setenv", 6) == 0 ||
         my_strncmp(e->my_tab[0], "unsetenv", 8) == 0)
         return 0;
     if (WIFEXITED(status)) {
         exit_status = WEXITSTATUS(status);
         if (exit_status == 14 && my_strcmp(e->my_tab[0], "cd") != 0) {
-            write(2, e->input, my_strlen(e->input));
+            exit_status = 1;
+            my_strcat(input, "bash: ");
+            my_strcat(input, e->input);
+            write(2, e->input, my_strlen(e->input) - 1);
             write(2, ": Command not found.\n", 22);
         }
+        exit_status = 0;
     }
     free(input);
     return 0;

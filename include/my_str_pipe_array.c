@@ -41,8 +41,8 @@ static int coding_style(char *word, int j)
 {
     if (back_zero(j, word) == 0)
         j += 1;
-    if (word[j] == ' ')
-        for (; word[j + 1] == ' '; j++);
+    if (word[j] == ' ' || word[j] == '\t')
+        for (; word[j] == ' ' || word[j] == '\t'; j++);
     return j;
 }
 

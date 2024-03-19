@@ -31,5 +31,6 @@ typedef struct env_s {
 extern env_t *e;
 extern int status;
 extern char *my_command_echo;
+extern int exit_status;
 
 #endif

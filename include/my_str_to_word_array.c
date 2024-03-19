@@ -39,9 +39,16 @@ char *skip_spaces(char *word)
 
 static int coding_style(char *word, int j)
 {
-    if (word[j] == ' ')
-        for (; word[j + 1] == ' '; j++);
+    if (word[j] == ' ' || word[j] == '\t')
+        for (; word[j + 1] == ' ' || word[j + 1] == '\t'; j++);
     return j;
+}
+
+static int compare(int j, char *word)
+{
+    if (my_char_isprintable(word[j]) == 0 && word[j] != ' ' && word[j] != '\t')
+        return 0;
+    return 1;
 }
 
 char **my_str_to_word_array(char *word)
@@ -55,7 +62,7 @@ char **my_str_to_word_array(char *word)
     for (int j = 0; j < my_strlen(word); j++) {
         character = 0;
         array[line] = malloc(sizeof(char) * my_strlen(word) + 1);
-        for (; my_char_isprintable(word[j]) == 0 && word[j] != ' '; j++) {
+        for (; compare(j, word); j++) {
             array[line][character] = word[j];
             character++;
         }

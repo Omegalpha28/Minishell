@@ -37,8 +37,6 @@ static int verif_semicolon(char *input)
 
 static char *coding_style(char *resultat)
 {
-    if (resultat[0] == ';' || resultat[0] == '\\' && resultat[1] == 'n')
-        resultat++;
     if (resultat != NULL)
         resultat = skip_spaces(resultat);
     return resultat;
