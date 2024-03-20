@@ -105,7 +105,6 @@ int main(int argc, char *argv[], char *env[])
 {
     char **my_tab = NULL;
     char *input = NULL;
-    char **my_env = wacpy(env);
 
     if (argc >= 2) {
         for (int i = 1; i < 2; i++)
@@ -113,9 +112,9 @@ int main(int argc, char *argv[], char *env[])
         init_struct(my_tab, env, 0, my_strdup(my_tab[0]));
         print_arg(my_tab, 1);
     } else if (argc == 1) {
-        my_tab = verif_echo(input, my_env);
+        my_tab = verif_echo(input, env);
         input = my_strdup(e->input);
     }
-    my_loop(my_tab, input, my_env, argc);
+    my_loop(my_tab, input, env, argc);
     return (exit_status);
 }
