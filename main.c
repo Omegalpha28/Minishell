@@ -12,18 +12,6 @@ int status;
 char *my_command_echo;
 int exit_status;
 
-static int free_all(char **my_tab, char *input, char **env)
-{
-    int size = my_arraylen(my_tab);
-
-    free(input);
-    for (; my_tab[size]; size++)
-        free(my_tab[size]);
-    for (size = 0; env[size]; size++)
-        free(env[size]);
-    return 0;
-}
-
 static char **verif_echo(char *input, char **env)
 {
     ssize_t characters_read = -1;
@@ -37,10 +25,10 @@ static char **verif_echo(char *input, char **env)
         if (input[characters_read - 1] == '\n')
             input[characters_read - 1] = '\0';
         tab = my_str_to_word_array(my_strdup(input));
-        init_struct(tab, env, 1, my_strdup(input));
+        init_struct(tab, env, my_strdup(input));
     } else {
         tab = my_str_to_word_array("hello world");
-        init_struct(tab, env, 0, "hello world");
+        init_struct(tab, env, "hello world");
         print_arg(tab, 1);
     }
     return tab;
@@ -80,7 +68,7 @@ char *my_get_input(void)
         return NULL;
 }
 
-int my_loop(char **my_tab, char *input, char **env, int argc)
+int my_loop(char **my_tab, char *input, char **env)
 {
     int time = 100000;
 
@@ -93,7 +81,7 @@ int my_loop(char **my_tab, char *input, char **env, int argc)
             my_tab = add_tab(input, my_tab);
             env = my_comma(my_tab, env, input);
         }
-        if (!isatty(STDIN_FILENO) || !isatty(STDIN_FILENO) && input == NULL)
+        if (!isatty(STDIN_FILENO) || (!isatty(STDIN_FILENO) && input == NULL))
             break;
         wait(&time);
         print_arg(my_tab, 1);
@@ -109,12 +97,12 @@ int main(int argc, char *argv[], char *env[])
     if (argc >= 2) {
         for (int i = 1; i < 2; i++)
             my_tab = my_str_to_word_array(argv[i]);
-        init_struct(my_tab, env, 0, my_strdup(my_tab[0]));
+        init_struct(my_tab, env, my_strdup(my_tab[0]));
         print_arg(my_tab, 1);
     } else if (argc == 1) {
         my_tab = verif_echo(input, env);
         input = my_strdup(e->input);
     }
-    my_loop(my_tab, input, env, argc);
+    my_loop(my_tab, input, env);
     return (exit_status);
 }

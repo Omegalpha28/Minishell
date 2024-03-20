@@ -9,8 +9,6 @@
 
 static int my_char_isprintable(char str)
 {
-    int i = 0;
-
     if (str >= '!' && str <= '~')
         return 0;
     return 1;
@@ -31,7 +29,7 @@ static int word_counter_strtok(char *word, char del)
     int line = 0;
 
     for (int i = 0; word[i] != '\0'; i++) {
-        if (word[i] == del || back_zero(i, word) == 0);
+        if (word[i] == del || back_zero(i, word) == 0)
             line++;
     }
     return line;
@@ -48,8 +46,8 @@ static int coding_style(char *word, int j)
 
 static int compare(int j, char *word, char del)
 {
-    if (word[j] == ' ' || my_char_isprintable(word[j]) == 0 &&
-        word[j] != del && back_zero(j, word) == 1)
+    if (word[j] == ' ' || (my_char_isprintable(word[j]) == 0 &&
+        word[j] != del && back_zero(j, word) == 1))
         return 0;
     return 1;
 }

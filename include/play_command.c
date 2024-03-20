@@ -33,7 +33,7 @@ int start_command(char **env)
         exit(errno);
     } else {
         waitpid(-1, &status, 0);
-        error_command(0);
+        error_command();
     }
     return 0;
 }

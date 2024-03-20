@@ -47,7 +47,6 @@ static char **comma_loop(char *input, char **env, int have_semicolon,
     char **my_tab)
 {
     char *input_copy = my_strdup(input);
-    char *partieRestante;
     char *resultat;
     char **tab = my_str_pipe_array(input_copy, ';');
     int i = 0;
@@ -72,6 +71,7 @@ char **my_comma(char **my_tab, char **env, char *input)
     if (have_semicolon == 1) {
         modify_struct(my_tab);
         env = inspect_input(input, env, my_tab);
+        return env;
     } else
         return (comma_loop(input, env, have_semicolon, my_tab));
 }

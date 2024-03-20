@@ -46,12 +46,10 @@ static int verif_setenv(char **env, char **demand)
     return 0;
 }
 
-static char **malloc_new_env(char **env, int step, char **new_env,
-    char **demand)
+static char **malloc_new_env( int step, char **new_env, char **demand)
 {
     char *name;
     char *value;
-    char result;
 
     if (my_arraylen(demand) == 3) {
         value = demand[2];
@@ -82,7 +80,7 @@ static char **set_env(char **env, char **demand)
         new_env[step] = malloc(sizeof(char *) * my_strlen(env[step]));
         new_env[step] = env[step];
     }
-    return malloc_new_env(env, step, new_env, demand);
+    return malloc_new_env(step, new_env, demand);
 }
 
 static char **unset_env(char **env, char **demand)
@@ -121,4 +119,5 @@ char **my_setenv(char **env, char *input)
     if (my_strcmp(demand[0], "setenv") == 0 ||
         my_strcmp(demand[0], "SETENV") == 0)
         return set_env(env, demand);
+    return env;
 }

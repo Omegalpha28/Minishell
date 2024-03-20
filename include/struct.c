@@ -4,19 +4,16 @@
 ** File description:
 ** Initialize and modify structs
 */
-#include "../header/struct.h"
 #include "../header/minishell.h"
 
-env_t *init_struct(char **tab, char **env, int who, char *input)
+env_t *init_struct(char **tab, char **env, char *input)
 {
     args_t *args = malloc(sizeof(args_t));
     int i = 0;
 
     e = malloc(sizeof(env_t));
-    for (; tab[i]; i++) {
+    for (; tab[i]; i++)
         args->arguments = tab[i];
-        args->next;
-    }
     e->my_pid = getpid();
     e->child_pid = 0;
     e->nb_args = i - 1;
@@ -32,9 +29,6 @@ env_t *init_struct(char **tab, char **env, int who, char *input)
 
 int modify_struct(char **my_tab)
 {
-    args_t *args = malloc(sizeof(args_t));
-    int i = 1;
-
     e->my_tab = my_tab;
     e->program_name = my_tab[0];
     return 0;

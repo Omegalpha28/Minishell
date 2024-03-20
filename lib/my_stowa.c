@@ -8,8 +8,6 @@
 
 static int my_char_isprintable(char str)
 {
-    int i = 0;
-
     if (str >= '!' && str <= '~')
         return 0;
     return 1;
@@ -28,8 +26,6 @@ static int word_counter(char *word)
 
 char *skip_spaces(char *word)
 {
-    char *result = malloc(sizeof(char) * my_strlen(word));
-
     if (*word == ' ' || *word == '\t') {
         while (*word == ' ' || *word == '\t')
             word++;

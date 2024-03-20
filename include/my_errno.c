@@ -51,7 +51,7 @@ int error_diectory(char *path)
     }
 }
 
-int error_command(int num_input)
+int error_command(void)
 {
     char *input = malloc(sizeof(char) * my_strlen(e->input) + 100);
 
