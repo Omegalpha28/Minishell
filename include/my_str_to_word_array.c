@@ -20,7 +20,7 @@ static int word_counter(char *word)
     int line = 0;
 
     for (int i = 0; word[i] != '\0'; i++) {
-        if (word[i] == ' ');
+        if (word[i] == ' ')
             line++;
     }
     return line;
@@ -40,7 +40,7 @@ char *skip_spaces(char *word)
 static int coding_style(char *word, int j)
 {
     if (word[j] == ' ' || word[j] == '\t')
-        for (; word[j + 1] == ' ' || word[j + 1] == '\t'; j++);
+        for (; (!(word[j + 1] != ' ' && word[j + 1] != '\t')); j++);
     return j;
 }
 
@@ -58,11 +58,11 @@ char **my_str_to_word_array(char *word)
     int character = 0;
 
     skip_spaces(word);
-    array = malloc(sizeof(char *) * word_counter(word));
+    array = malloc(sizeof(char *) * word_counter(word) + 1);
     for (int j = 0; j < my_strlen(word); j++) {
         character = 0;
         array[line] = malloc(sizeof(char) * my_strlen(word) + 1);
-        for (; compare(j, word); j++) {
+        for (; compare(j, word) == 0; j++) {
             array[line][character] = word[j];
             character++;
         }

@@ -42,7 +42,8 @@ static char *coding_style(char *resultat)
     return resultat;
 }
 
-static char **comma_loop(char *input, char **env, int have_semicolon)
+static char **comma_loop(char *input, char **env, int have_semicolon,
+    char **my_tab)
 {
     char *input_copy = my_strdup(input);
     char *partieRestante;
@@ -59,6 +60,7 @@ static char **comma_loop(char *input, char **env, int have_semicolon)
             env = inspect_input(resultat, env);
             i++;
         }
+        my_get_all_line(my_tab, env);
     }
     return env;
 }
@@ -69,7 +71,8 @@ char **my_comma(char **my_tab, char **env, char *input)
 
     if (have_semicolon == 1) {
         modify_struct(my_tab);
-        return (inspect_input(input, env));
+        env = inspect_input(input, env);
+        my_get_all_line(my_tab, env);
     } else
-        return (comma_loop(input, env, have_semicolon));
+        return (comma_loop(input, env, have_semicolon, my_tab));
 }

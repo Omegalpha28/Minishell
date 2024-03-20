@@ -24,7 +24,30 @@ static int free_all(char **my_tab, char *input, char **env)
     return 0;
 }
 
-static char **add_tab(char *input, char **my_tab)
+static char **verif_echo(char *input, char **env)
+{
+    ssize_t characters_read = -1;
+    char **tab;
+    size_t stat;
+
+    if (!isatty(STDIN_FILENO)) {
+        characters_read = getline(&input, &stat, stdin);
+        if (characters_read == 1)
+            exit(0);
+        if (input[characters_read - 1] == '\n')
+            input[characters_read - 1] = '\0';
+        tab = my_str_to_word_array(my_strdup(input));
+        my_putstr(tab[0]);
+        init_struct(tab, env, 1, my_strdup(input));
+    } else {
+        tab = my_str_to_word_array("hello world");
+        init_struct(tab, env, 0, "hello world");
+        print_arg(tab, 1);
+    }
+    return tab;
+}
+
+char **add_tab(char *input, char **my_tab)
 {
     char **my_new_tab;
 
@@ -40,26 +63,6 @@ static char **add_tab(char *input, char **my_tab)
         return my_new_tab;
     }
     return NULL;
-}
-
-static char **verif_echo(char *input, char **env)
-{
-    ssize_t characters_read = -1;
-    char **tab;
-    size_t stat;
-
-    if (!isatty(STDIN_FILENO)) {
-        characters_read = getline(&input, &stat, stdin);
-        if (characters_read == 1)
-            exit(0);
-        tab = my_str_to_word_array(input);
-        init_struct(tab, env, 1, my_strdup(input));
-    } else {
-        tab = my_str_to_word_array("hello world");
-        init_struct(tab, env, 0, "hello world");
-        print_arg(tab, 1);
-    }
-    return tab;
 }
 
 char *my_get_input(void)
