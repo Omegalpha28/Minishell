@@ -24,7 +24,9 @@ SRC =  include/print.c \
 	include/my_errno.c \
 	include/pipe.c \
 	include/my_str_pipe_array.c \
-	include/echo.c
+	include/echo.c \
+	include/walen.c \
+	include/wacpy.c
 
 
 FILE_O = *.o

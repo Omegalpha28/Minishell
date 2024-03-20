@@ -52,4 +52,6 @@ char **my_comma(char **my_tab, char **env, char *input);
 char **my_str_pipe_array(char *word, char del);
 int my_get_all_line(char **my_tab, char **env);
 char **add_tab(char *input, char **my_tab);
+size_t walen(char **warray);
+char **wacpy(char **tab);
 #endif

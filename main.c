@@ -37,7 +37,6 @@ static char **verif_echo(char *input, char **env)
         if (input[characters_read - 1] == '\n')
             input[characters_read - 1] = '\0';
         tab = my_str_to_word_array(my_strdup(input));
-        my_putstr(tab[0]);
         init_struct(tab, env, 1, my_strdup(input));
     } else {
         tab = my_str_to_word_array("hello world");
@@ -102,10 +101,11 @@ int my_loop(char **my_tab, char *input, char **env, int argc)
     return 0;
 }
 
-int main(int argc, char *argv[], char **env)
+int main(int argc, char *argv[], char *env[])
 {
     char **my_tab = NULL;
     char *input = NULL;
+    char **my_env = wacpy(env);
 
     if (argc >= 2) {
         for (int i = 1; i < 2; i++)
@@ -113,9 +113,9 @@ int main(int argc, char *argv[], char **env)
         init_struct(my_tab, env, 0, my_strdup(my_tab[0]));
         print_arg(my_tab, 1);
     } else if (argc == 1) {
-        my_tab = verif_echo(input, env);
+        my_tab = verif_echo(input, my_env);
         input = my_strdup(e->input);
     }
-    my_loop(my_tab, input, env, argc);
+    my_loop(my_tab, input, my_env, argc);
     return (exit_status);
 }
