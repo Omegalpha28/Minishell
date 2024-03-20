@@ -9,7 +9,7 @@
 char **wacpy(char **tab)
 {
     ssize_t size = walen(tab);
-    char **array = malloc(sizeof(char *) * size);
+    char **array = malloc(sizeof(char *) * size + 10);
     int line = 0;
     int character = 0;
 

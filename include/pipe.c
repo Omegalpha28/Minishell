@@ -6,12 +6,13 @@
 */
 #include "../header/minishell.h"
 
-static char **inspect_input(char *input, char **env)
+static char **inspect_input(char *input, char **env, char **my_tab)
 {
     if (input != NULL) {
         start_command(env);
         env = my_command(input, env);
     }
+    my_get_all_line(my_tab, env);
     return env;
 }
 
@@ -57,10 +58,9 @@ static char **comma_loop(char *input, char **env, int have_semicolon,
             resultat = tab[i];
             resultat = coding_style(resultat);
             modify_struct(my_str_to_word_array(resultat));
-            env = inspect_input(resultat, env);
+            env = inspect_input(resultat, env, my_tab);
             i++;
         }
-        my_get_all_line(my_tab, env);
     }
     return env;
 }
@@ -71,8 +71,7 @@ char **my_comma(char **my_tab, char **env, char *input)
 
     if (have_semicolon == 1) {
         modify_struct(my_tab);
-        env = inspect_input(input, env);
-        my_get_all_line(my_tab, env);
+        env = inspect_input(input, env, my_tab);
     } else
         return (comma_loop(input, env, have_semicolon, my_tab));
 }
