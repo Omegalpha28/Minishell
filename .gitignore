@@ -6,3 +6,7 @@ vg*
 *.sh
 *.sample
 tests
+*.gcno
+*.gcda
+*.css
+*.html
