@@ -53,6 +53,30 @@ int error_diectory(char *path)
     }
 }
 
+static void writing_error(void)
+{
+    if (e->input[0] == '.' && e->input[1] == '/') {
+        write(2, e->input, my_strlen(e->input));
+        write(2, ": Permission denied.\n", 21);
+    } else {
+        write(2, e->input, my_strlen(e->input));
+        write(2, ": Command not found.\n", 21);
+    }
+}
+
+static int verif_error(void)
+{
+    if (exit_status == 13 && my_strcmp(e->my_tab[0], "cd") != 0) {
+        exit_status = 1;
+        writing_error();
+    } else if (exit_status == 14 && my_strcmp(e->my_tab[0], "cd") != 0) {
+        exit_status = 1;
+        write(2, e->input, my_strlen(e->input));
+        write(2, ": Command not found.\n", 21);
+    }
+    return 0;
+}
+
 int error_command(void)
 {
     char *input = malloc(sizeof(char) * my_strlen(e->input) + 100);
@@ -62,13 +86,7 @@ int error_command(void)
         return 0;
     if (WIFEXITED(status)) {
         exit_status = WEXITSTATUS(status);
-        if (exit_status == 14 && my_strcmp(e->my_tab[0], "cd") != 0) {
-            exit_status = 1;
-            my_strcat(input, "bash: ");
-            my_strcat(input, e->input);
-            write(2, e->input, my_strlen(e->input));
-            write(2, ": Command not found.\n", 21);
-        }
+        verif_error();
     }
     free(input);
     return 0;
