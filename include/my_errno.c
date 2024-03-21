@@ -41,9 +41,11 @@ int error_diectory(char *path)
         return 0;
     else {
         if (open(path, O_RDONLY) == -1) {
+            exit_status = 1;
             write(2, path, my_strlen(path));
             write(2, ": No such file or directory.\n", 30);
         } else {
+            exit_status = 1;
             write(2, path, my_strlen(path));
             write(2, ": Not a directory.\n", 20);
         }
@@ -64,10 +66,9 @@ int error_command(void)
             exit_status = 1;
             my_strcat(input, "bash: ");
             my_strcat(input, e->input);
-            write(2, e->input, my_strlen(e->input) - 1);
-            write(2, ": Command not found.\n", 22);
+            write(2, e->input, my_strlen(e->input));
+            write(2, ": Command not found.\n", 21);
         }
-        exit_status = 0;
     }
     free(input);
     return 0;

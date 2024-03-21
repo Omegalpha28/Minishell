@@ -8,7 +8,7 @@
     #define LIB_H_
     #include <sys/types.h>
 
-char my_putchar(char a);
+void my_putchar(char a);
 char *skip_spaces(char *word);
 int my_putstr(char const *str);
 int num_len(int n);
@@ -23,5 +23,6 @@ char **my_str_to_word_array(char *word);
 char *my_strdup(char const *src);
 size_t walen(char **warray);
 char **wacpy(char **tab);
+int my_char_is_alphanum(char const *input, char const *demand);
 
 #endif

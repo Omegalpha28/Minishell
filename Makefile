@@ -19,7 +19,8 @@ LIB :=  lib/my_strlen.c \
 	lib/my_strdup.c \
 	lib/my_skipstr.c \
 	lib/walen.c \
-	lib/wacpy.c
+	lib/wacpy.c \
+	lib/my_char_is_alphanum.c
 
 SRC :=	$(LIB) \
 	include/my_get_env.c \

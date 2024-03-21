@@ -46,7 +46,7 @@ static int verif_setenv(char **env, char **demand)
     return 0;
 }
 
-static char **malloc_new_env( int step, char **new_env, char **demand)
+static char **malloc_new_env(int step, char **new_env, char **demand)
 {
     char *name;
     char *value;
@@ -99,6 +99,30 @@ static char **unset_env(char **env, char **demand)
     return new_env;
 }
 
+static int error_handeling_env(char **demand, int size)
+{
+    char c;
+
+    if (size == 1 && (my_strcmp(demand[0], "unsetenv") == 0 ||
+        my_strcmp(demand[0], "UNSETENV") == 0)) {
+        return -1;
+    }
+    if ((my_strcmp(demand[0], "setenv") ||
+        my_strcmp(demand[0], "SETENV")) && size > 1) {
+        c = demand[1][0];
+        if (c >= '0' && c <= '9') {
+            exit_status = 1;
+            write(2, my_strdup(demand[0]), my_strlen(my_strdup(demand[0])));
+            write(2, ": Variable name must begin with a letter.\n", 42);
+            return -1;
+        }
+        if (my_char_is_alphanum(my_strdup(demand[1]),
+            my_strdup(demand[0])) == -1)
+            return -1;
+    }
+    return 0;
+}
+
 char **my_setenv(char **env, char *input)
 {
     char **demand;
@@ -108,8 +132,7 @@ char **my_setenv(char **env, char *input)
         return env;
     demand = my_str_to_word_array(input);
     for (; demand[size]; size++);
-    if (size == 1 && (my_strcmp(demand[0], "unsetenv") == 0 ||
-        my_strcmp(demand[0], "UNSETENV") == 0)) {
+    if (error_handeling_env(demand, size) == -1) {
         free(demand);
         return env;
     }
