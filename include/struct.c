@@ -24,6 +24,7 @@ env_t *init_struct(char **tab, char **env, char *input)
     e->ending = 0;
     e->input = my_strdup(input);
     e->oldpwd = my_path_zone(env, "OLDPWD");
+    e->redirect = 0;
     return e;
 }
 
