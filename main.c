@@ -39,7 +39,6 @@ char **add_tab(char *input, char **my_tab)
 {
     char **my_new_tab;
 
-    my_putstr(input);
     if (input == NULL)
         return my_tab;
     my_new_tab = malloc(sizeof(char *) * (my_strlen(input)));
