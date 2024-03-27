@@ -46,7 +46,7 @@ static char **comma_loop(char *input, char **env, char **my_tab)
         resultat = tab[i];
         resultat = coding_style(resultat);
         modify_struct(my_str_to_word_array(resultat));
-        env = inspect_input(resultat, env, my_tab);
+        env = inspect_input(resultat, env, tab);
         i++;
     }
     return env;
