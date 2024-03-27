@@ -45,6 +45,7 @@ static char **comma_loop(char *input, char **env, char **my_tab)
         resultat = malloc(sizeof(char) * my_strlen(tab[i]));
         resultat = tab[i];
         resultat = coding_style(resultat);
+        e->input = resultat;
         modify_struct(my_str_to_word_array(resultat));
         env = inspect_input(resultat, env, tab);
         i++;
