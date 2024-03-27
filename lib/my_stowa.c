@@ -15,7 +15,7 @@ static int my_char_isprintable(char str)
 
 static int word_counter(char *word)
 {
-    int line = 0;
+    int line = 1;
 
     for (int i = 0; word[i] != '\0'; i++) {
         if (word[i] == ' ')
@@ -54,7 +54,7 @@ char **my_str_to_word_array(char *word)
     int character = 0;
 
     skip_spaces(word);
-    array = malloc(sizeof(char *) * word_counter(word) + 1);
+    array = malloc(sizeof(char *) * (word_counter(word) + 1));
     for (int j = 0; j < my_strlen(word); j++) {
         character = 0;
         array[line] = malloc(sizeof(char) * my_strlen(word) + 1);
