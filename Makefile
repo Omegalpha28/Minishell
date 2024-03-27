@@ -12,15 +12,10 @@ LIB :=  lib/my_strlen.c \
 	lib/my_numlen.c \
 	lib/my_put_nbr.c \
 	lib/my_strcat.c \
-	lib/my_strncpy.c \
-	lib/my_strncmp.c \
 	lib/my_strcpy.c \
 	lib/my_strcmp.c \
 	lib/my_strdup.c \
-	lib/my_skipstr.c \
-	lib/walen.c \
-	lib/wacpy.c \
-	lib/my_char_is_alphanum.c
+	lib/my_skipstr.c
 
 SRC :=	$(LIB) \
 	include/my_get_env.c \
@@ -32,9 +27,15 @@ SRC :=	$(LIB) \
 	include/unsetenv_setenv.c \
 	include/play_command.c \
 	include/my_errno.c \
-	include/pipe.c \
+	include/add_pipe.c \
 	include/my_str_pipe_array.c \
 	include/echo.c \
+	include/verif_option.c \
+	include/my_char_is_alphanum.c \
+	include/walen.c \
+	include/wacpy.c \
+	include/my_strncpy.c \
+	include/my_strncmp.c
 
 FILE_O = *.o
 LIBMY_A = libmy.a
@@ -63,10 +64,13 @@ re:
 	make
 
 tests_build:
-	gcc -o unit_tests $(TSRC) $(TEST) $(LIB) $(TLIB)
+	gcc -o unit_tests $(TSRC) $(TEST) $(TLIB)
 
-tests_run:
-	tests_build
+tests_run: tests_build
+	find -type f -iname "*.gcno" -delete
+	find -type f -iname "*.gcda" -delete
+	find -type f -iname "*.css" -delete
+	find -type f -iname "*.html" -delete
 	./unit_tests
 
 tests_clean:
@@ -75,10 +79,7 @@ tests_clean:
 	find -type f -iname "*.css" -delete
 	find -type f -iname "*.html" -delete
 
-tests_fclean:
-	tests_clean
+tests_fclean: tests_clean
 	rm -f unit_tests
 
-tests_re:
-	tests_fclean
-	tests_run
+tests_re: tests_fclean tests_run
