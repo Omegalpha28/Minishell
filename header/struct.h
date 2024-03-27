@@ -14,6 +14,22 @@ typedef struct args_s {
     struct args_s *next;
 }args_t;
 
+enum state {
+    nope = 0,
+    pipes,
+    redirect_V,
+    redirect_VV,
+    redirect_A,
+    redirect_AA,
+    REDIRECT_SIZE
+};
+
+typedef struct pipe_s {
+    enum state s;
+    char *input;
+    char next_input;
+} pipe_t;
+
 typedef struct env_s {
     pid_t my_pid;
     pid_t child_pid;
@@ -26,11 +42,13 @@ typedef struct env_s {
     int ending;
     char *input;
     char *oldpwd;
+    int redirect;
 }env_t;
 
 extern env_t *e;
 extern int status;
 extern char *my_command_echo;
 extern int exit_status;
+extern enum state s;
 
 #endif

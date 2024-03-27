@@ -40,5 +40,11 @@ char **my_comma(char **my_tab, char **env, char *input);
 char **my_str_pipe_array(char *word, char del);
 int my_get_all_line(char **my_tab, char **env);
 char **add_tab(char *input, char **my_tab);
+int my_char_is_alphanum(char const *input, char const *demand);
+size_t walen(char **warray);
+char **wacpy(char **tab);
+int my_strncmp(char const *s1, char const *s2, int len);
+char *my_strncpy(char *dest, char const *str, int n);
+char **add_pipe(char *input, char **env, char **my_tab);
 
 #endif
