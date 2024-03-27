@@ -122,16 +122,12 @@ char **add_pipe(char *input, char **env, char **my_tab)
     pipe_t *p;
     int i = 0;
 
-    my_put_nbr(size);
     if (size > 0) {
         p = init_pipe(input, size);
         while (i < size) {
             e->redirect = 1;
             my_comma(my_tab, env, p[i].input);
-            my_putstr(p[i].input);
             my_comma(my_tab, env, p[i].next_input);
-            my_putstr(p[i].next_input);
-            my_putstr("ok");
             i++;
         }
     } else
