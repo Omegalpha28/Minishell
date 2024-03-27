@@ -80,7 +80,7 @@ int my_loop(char **my_tab, char *input, char **env)
             input = skip_spaces(input);
         if (input != NULL) {
             my_tab = add_tab(input, my_tab);
-            env = add_pipe(input, env, my_tab);
+            env = my_comma(my_tab, env, input);
         }
         if (!isatty(STDIN_FILENO) || (!isatty(STDIN_FILENO) && input == NULL))
             break;

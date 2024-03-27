@@ -35,7 +35,8 @@ SRC :=	$(LIB) \
 	include/walen.c \
 	include/wacpy.c \
 	include/my_strncpy.c \
-	include/my_strncmp.c
+	include/my_strncmp.c \
+	include/my_strndup.c
 
 FILE_O = *.o
 LIBMY_A = libmy.a

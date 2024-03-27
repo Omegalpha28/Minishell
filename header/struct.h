@@ -27,7 +27,7 @@ enum state {
 typedef struct pipe_s {
     enum state s;
     char *input;
-    char next_input;
+    char *next_input;
 } pipe_t;
 
 typedef struct env_s {

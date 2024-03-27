@@ -46,5 +46,7 @@ char **wacpy(char **tab);
 int my_strncmp(char const *s1, char const *s2, int len);
 char *my_strncpy(char *dest, char const *str, int n);
 char **add_pipe(char *input, char **env, char **my_tab);
+char *my_strndup(int begin, int end, char const *input);
+char **inspect_input(char *input, char **env, char **my_tab);
 
 #endif

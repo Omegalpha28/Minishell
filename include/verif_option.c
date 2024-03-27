@@ -6,7 +6,7 @@
 */
 #include "../header/minishell.h"
 
-static char **inspect_input(char *input, char **env, char **my_tab)
+char **inspect_input(char *input, char **env, char **my_tab)
 {
     if (input != NULL) {
         start_command(env);
@@ -47,7 +47,7 @@ static char **comma_loop(char *input, char **env, char **my_tab)
         resultat = coding_style(resultat);
         e->input = resultat;
         modify_struct(my_str_to_word_array(resultat));
-        env = inspect_input(resultat, env, tab);
+        env = add_pipe(resultat, env, tab);
         i++;
     }
     return env;
@@ -59,7 +59,7 @@ char **my_comma(char **my_tab, char **env, char *input)
 
     if (have_semicolon == 1) {
         modify_struct(my_tab);
-        env = inspect_input(input, env, my_tab);
+        env = add_pipe(input, env, my_tab);
         return env;
     } else
         return (comma_loop(input, env, my_tab));
