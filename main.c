@@ -61,6 +61,8 @@ char *my_get_input(void)
 
     if (isatty(STDIN_FILENO))
         characters_read = getline(&input, &input_size, stdin);
+    if (characters_read <= 1)
+            exit(0);
     if (characters_read > -1) {
         if (input[characters_read - 1] == '\n')
             input[characters_read - 1] = '\0';
