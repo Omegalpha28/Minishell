@@ -76,7 +76,7 @@ static char *no_spaces(char *input)
     int size = my_strlen(input);
 
     if (input[size - 1] == ' ' || input[size - 1] == '\t') {
-        for(; input[size - 1] == ' ' || input[size - 1] == '\t'; size--)
+        for (; input[size - 1] == ' ' || input[size - 1] == '\t'; size--)
             input[size - 1] = '\0';
     }
     return input;
