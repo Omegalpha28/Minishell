@@ -45,19 +45,28 @@ char **my_strtok_array(char *word, char del)
     int character = 0;
 
     word = skip_spaces(word);
-    array = malloc(sizeof(char *) * word_counter_strtok(word, del));
-    for (int j = 0; j < my_strlen(word); j++) {
+    if (word == NULL)
+        return NULL; // Gestion de l'erreur si skip_spaces renvoie NULL.
+
+    array = malloc(sizeof(char *) * (word_counter_strtok(word, del) + 2));  // +2 pour le dernier mot + NULL
+    if (array == NULL)
+        return NULL; // Gestion de l'échec de malloc.
+
+    for (int j = 0; j < my_strlen(word) && word[j] != '\0'; j++) {
         character = 0;
-        array[line] = malloc(my_strlen(word) + 1);
-        for (; compare(j, word, del) == 0; j++) {
+        array[line] = malloc(my_strlen(word)); // Peut-être ajuster la taille ici en fonction du mot.
+        if (array[line] == NULL)
+            return NULL; // Gestion de l'échec de malloc.
+
+        for (; j < my_strlen(word) && compare(j, word, del) == 0; j++) {
             array[line][character] = word[j];
             character++;
         }
         j = coding_style(word, j);
-        if (array[line][character - 1] != '\0')
-            array[line][character] = '\0';
+
+        array[line][character] = '\0'; // Assurez-vous que la chaîne est terminée par '\0'.
         line++;
     }
-    array[line] = NULL;
+    array[line] = NULL; // Terminer l'array avec NULL.
     return array;
 }
